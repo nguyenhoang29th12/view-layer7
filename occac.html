@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request By Nguyen Hoang</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.1/echarts.min.js" integrity="sha512-OTbGFYPLe3jhy4bUwbB8nls0TFgz10kn0TLkmyA+l3FyivDs31zsXCjOis7YGDtE2Jsy0+fzW+3/OVoPVujPmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        @import "https://fonts.googleapis.com/css2?family=Outfit&display=swap";
+         body {
+             margin: 0;
+             background: #070e27;
+             font-family: 'Outfit', sans-serif;
+             color: white;
+             text-align: center;
+         }
+     
+         /* CSS cho avatar vï¿½ ch? "Quï¿½n Anh" ? ï¿½?u trang */
+         #header-avatar {
+             margin-top: 20px;
+         }
+         #header-avatar img {
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             border: 3px solid white;
+         }
+         #header-text {
+             font-size: 1.2rem;
+             margin-top: 10px;
+         }
+     
+         /* CSS cho ph?n ?nh nh? */
+         .image-gallery {
+             display: flex;
+             justify-content: center;
+             gap: 15px;
+             margin-top: 20px;
+             position: relative;
+         }
+         .image-container {
+             position: relative;
+             display: inline-block;
+             text-align: center;
+         }
+         .image-gallery img {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             transition: transform 0.3s;
+         }
+         .image-gallery img:hover {
+             transform: scale(1.2);
+         }
+         .caption {
+             display: none; /* ?n chï¿½ thï¿½ch m?c ï¿½?nh */
+             position: absolute;
+             bottom: -18px; /* ï¿½?t ngay dï¿½?i ?nh */
+             left: 50%;
+             transform: translateX(-50%);
+             color: #ffffff;
+             background-color: rgba(0, 0, 0, 0.7);
+             padding: 2px 5px;
+             border-radius: 3px;
+             font-size: 0.75rem;
+             white-space: nowrap; /* Khï¿½ng xu?ng d?ng */
+         }
+     
+         /* CSS cho bi?u ï¿½? */
+         #chart {
+             position: relative;
+             width: 75%;
+             height: 50vh;
+             margin: 0 auto;
+             margin-top: 70px;
+         }
+     
+         /* D?ng ch? dï¿½?i bi?u ï¿½? */
+         #chart-footer-text {
+             margin-top: 40px;
+             font-size: 1.2rem;
+         }
+     
+         /* Responsive cho thi?t b? di ï¿½?ng */
+         @media (max-width: 768px) {
+             #chart {
+                 width: 90%;
+                 height: 40vh;
+             }
+             #header-text, #chart-footer-text {
+                 font-size: 1rem;
+             }
+             #header-avatar img {
+                 width: 80px;
+                 height: 80px;
+             }
+         }
+       </style>
+</head>
+<body>
+    <div id="header-avatar">
+        <img alt="Overlay Image" src="https://i.imgur.com/DyWbtUy.jpeg"/>
+       </div>
+       <div id="header-text">
+        Protect Layer 7 - Test Request
+       </div>
+       <!-- Ph?n hi?n th? các h?nh ?nh nh? -->
+       <div class="image-gallery">
+        <div class="image-container">
+         <a href="https://www.facebook.com/quannotj" target="_blank">
+          <img alt="Image 1" src="https://www.ellejauffret.com/files/resized/486d1d08-61fb-4d7c-9cb2-4cb67ea2fc1d/cropped/169;24;434;437;768;480;f5e4365821f18c5be952d46dbf302cef85eb49a1.png"/>
+         </a>
+         <div class="caption">
+          Facebook
+         </div>
+        </div>
+        <div class="image-container">
+         <a href="https://discord.gg/aetaodz" target="_blank">
+          <img alt="Image 2" src="https://pnghq.com/wp-content/uploads/discord-logo-transparent-png-1536x1536.png"/>
+         </a>
+         <div class="caption">
+          Discord
+         </div>
+        </div>
+        <div class="image-container">
+         <a href="https://zalo.me/0389348900" target="_blank">
+          <img alt="Image 3" src="https://giangphongthuy.com/wp-content/uploads/2020/12/Logo-Zalo.png"/>
+         </a>
+         <div class="caption">
+          Zalo
+         </div>
+        </div>
+        <div class="image-container">
+         <a href="https://t.me/quannotj" target="_blank">
+          <img alt="Image 4" src="https://uploads-ssl.webflow.com/6093d1d7c1b0f32feb8fba2f/6093d1d7c1b0f360b78fbbc7_Daco_4925781-p-1080.png"/>
+         </a>
+         <div class="caption">
+          Telegram
+         </div>
+        </div>
+        <div class="image-container">
+         <a href="https://www.youtube.com/@QuanNotj" target="_blank">
+          <img alt="Image 5" src="https://th.bing.com/th/id/OIP.7fy1fTAaayxiFYcjnqUw6wHaHa?w=950&amp;h=950&amp;rs=1&amp;pid=ImgDetMain"/>
+         </a>
+         <div class="caption">
+          Youtube
+         </div>
+        </div>
+       </div>   
+    <h1>Real-Time Request By Nguyen Hoang</h1>
+    <div id="chart"></div>
+
+    <script>
+        // Khởi tạo biểu đồ ECharts
+        var chart = echarts.init(document.getElementById('chart'));
+        var option = {
+            title: {
+                text: 'Number of Requests Over Time',
+                textStyle: {
+                    color: 'white'
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'time',
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                },
+                axisLabel: {
+                    color: 'white'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                },
+                axisLabel: {
+                    color: 'white'
+                }
+            },
+            series: [
+                {
+                    name: 'Requests',
+                    type: 'line',
+                    smooth: true,
+                    data: [],
+                    lineStyle: {
+                        color: '#00ff7f'
+                    },
+                    areaStyle: {
+                        color: 'rgba(0, 255, 127, 0.2)'
+                    }
+                }
+            ]
+        };
+        chart.setOption(option);
+
+        // Dữ liệu giả lập
+        let requestData = [];
+        function generateMockData() {
+            const now = new Date().getTime();
+            const randomValue = Math.floor(Math.random() * 100); // Số lượng request ngẫu nhiên
+            requestData.push([now, randomValue]);
+            if (requestData.length > 20) requestData.shift(); // Chỉ giữ lại 20 điểm dữ liệu
+
+            chart.setOption({
+                series: [{
+                    data: requestData
+                }]
+            });
+        }
+
+        // Cập nhật dữ liệu mỗi giây
+        setInterval(generateMockData, 1000);
+    </script>
+</body>
+</html>
